@@ -1,15 +1,21 @@
 #!/bin/python
 
-# My merge sort algorithm
+# My merge sort algorithm (can handle non-even arrays)
 
 def combine(x,y):
+	"""
+	merge_sort always sends y as bigger half in case x and y
+	are arrays of different lengths.
+	I have to include "=" to take this last observation into account.
+	"""
 	z = []
-	# this assumes that x and y are lists of the same magnitude
-	n = len(x)
+	# having nx and ny allows for combinin
+	nx = len(x)
+	ny = len(y) 
 	# starting positions for our pointers
 	i = 0
 	j = 0
-	while i < n and j < n:
+	while i < nx and j < ny:
 		if x[i] < y[j]:
 			z.append(x[i])
 			i += 1
@@ -17,10 +23,10 @@ def combine(x,y):
 			z.append(y[j])
 			j += 1
 	# append the remaining symbols
-	if j < i:
+	if j <= i: # include "=" here since y is bigger half in case of uneveness
 		for el in y[j:]:
 			z.append(el)
-	else:
+	else: # there are elements in remaining in x
 		for el in x[i:]:
 			z.append(el)
 	return z
@@ -34,3 +40,5 @@ def merge_sort(x):
 		foo = merge_sort(x[:half])
 		bar = merge_sort(x[half:])
 		return combine(foo,bar)
+		
+		
